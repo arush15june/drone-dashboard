@@ -31,7 +31,8 @@ def parse_drone_message(message_data):
     schema_data = {
         'latitude': drone_data.latitude,
         'longitude': drone_data.longitude,
-        'timestamp': parse_utc_timestamp(drone_data.timestamp).isoformat()
+        'timestamp': parse_utc_timestamp(drone_data.timestamp).isoformat(),
+        'curr_speed': drone_data.curr_speed
     }
 
     drone = drones.update_drone(drone_data.uuid, schema_data)

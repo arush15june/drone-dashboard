@@ -67,12 +67,18 @@ def add_drone(data_dict, *args, **kwargs):
 
 def update_drone(uuid, data_dict, *args, **kwargs):
     """ Update drone by UUID in database. """ 
+    curr_speed = data_dict.pop('curr_speed', None)
+    
     drone_instance = DroneState.query.get(uuid)
     if drone_instance is None:
         raise ValidationError(messages={'error': 'uuid not in database'})
-        
+
     drone_state = load_drone_state_dict(data_dict, instance=drone_instance)
+    if curr_speed is not None:
+        drone_state.data.curr_speed = curr_speed
+        
     db_session.commit()
+
     return drone_state.data
 
 

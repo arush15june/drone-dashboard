@@ -6,5 +6,6 @@ message DroneState {
   required string uuid = 1;
   required double latitude = 2;
   required double longitude = 3;
-  required int64 timestamp = 4;
+  required double curr_speed = 4;
+  required int64 timestamp = 5;
 }

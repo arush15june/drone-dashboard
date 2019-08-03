@@ -20,7 +20,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='drone',
   syntax='proto2',
   serialized_options=None,
-  serialized_pb=_b('\n\x0b\x64rone.proto\x12\x05\x64rone\"R\n\nDroneState\x12\x0c\n\x04uuid\x18\x01 \x02(\t\x12\x10\n\x08latitude\x18\x02 \x02(\x01\x12\x11\n\tlongitude\x18\x03 \x02(\x01\x12\x11\n\ttimestamp\x18\x04 \x02(\x03')
+  serialized_pb=_b('\n\x0b\x64rone.proto\x12\x05\x64rone\"f\n\nDroneState\x12\x0c\n\x04uuid\x18\x01 \x02(\t\x12\x10\n\x08latitude\x18\x02 \x02(\x01\x12\x11\n\tlongitude\x18\x03 \x02(\x01\x12\x12\n\ncurr_speed\x18\x04 \x02(\x01\x12\x11\n\ttimestamp\x18\x05 \x02(\x03')
 )
 
 
@@ -55,8 +55,15 @@ _DRONESTATE = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='timestamp', full_name='drone.DroneState.timestamp', index=3,
-      number=4, type=3, cpp_type=2, label=2,
+      name='curr_speed', full_name='drone.DroneState.curr_speed', index=3,
+      number=4, type=1, cpp_type=5, label=2,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='timestamp', full_name='drone.DroneState.timestamp', index=4,
+      number=5, type=3, cpp_type=2, label=2,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -74,7 +81,7 @@ _DRONESTATE = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=22,
-  serialized_end=104,
+  serialized_end=124,
 )
 
 DESCRIPTOR.message_types_by_name['DroneState'] = _DRONESTATE

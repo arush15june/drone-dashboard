@@ -12,6 +12,7 @@ def generate_uuid():
     :return str: Randomly generated UUID string.
     """
     return str(uuid.uuid4())
+
 class DroneState(Base):
     __tablename__ = 'drones'
     uuid = Column(String(36), primary_key=True, default=generate_uuid)
