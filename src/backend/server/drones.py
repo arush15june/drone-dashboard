@@ -73,7 +73,6 @@ def update_drone(uuid, data_dict, *args, **kwargs):
         
     drone_state = load_drone_state_dict(data_dict, instance=drone_instance)
     db_session.commit()
-
     return drone_state.data
 
 
