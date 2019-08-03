@@ -73,14 +73,17 @@ def update_drone(uuid, data_dict, *args, **kwargs):
     if drone_instance is None:
         raise ValidationError(messages={'error': 'uuid not in database'})
 
+    old_lat = drone_instance.latitude
+    old_long = drone_instance.longitude
+
     drone_state = load_drone_state_dict(data_dict, instance=drone_instance)
     if curr_speed is not None:
-        drone_state.data.curr_speed = curr_speed
+        drone_state.data.curr_speed = curr_speed    
+    drone_state.data.set_is_moving(old_lat, old_long)    
         
     db_session.commit()
 
     return drone_state.data
-
 
 def delete_drone(uuid, *args, **kwargs):
     """ Delete UUID from drone database. """

@@ -5,7 +5,7 @@ import socket
 import threading
 
 import drone_pb2
-from db import db_session
+from db import init_db, db_session
 from models import DroneState
 from schema import DroneStateSchema
 import drones
@@ -31,7 +31,7 @@ def parse_drone_message(message_data):
     schema_data = {
         'latitude': drone_data.latitude,
         'longitude': drone_data.longitude,
-        'timestamp': parse_utc_timestamp(drone_data.timestamp).isoformat(),
+        'data_timestamp': parse_utc_timestamp(drone_data.timestamp).isoformat(),
         'curr_speed': drone_data.curr_speed
     }
 
@@ -73,6 +73,8 @@ def tcp_listener(host, port):
         client_handler.start()
 
 if __name__ == "__main__":
+    init_db()
+    
     import signal, sys
 
     def handler(signum, frame):
