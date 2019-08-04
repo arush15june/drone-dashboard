@@ -74,7 +74,6 @@ def tcp_listener(host, port):
 
 if __name__ == "__main__":
     init_db()
-    
     import signal, sys
 
     def handler(signum, frame):

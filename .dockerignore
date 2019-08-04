@@ -1,0 +1,4 @@
+env/
+src/frontend/drone-app/node_modules/
+src/backend/server/drones.db
+__pycache__/

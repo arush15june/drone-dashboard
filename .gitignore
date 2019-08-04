@@ -1,5 +1,6 @@
 .vscode/
 env/
 __pycache__/
+node_modules/
 *.pyc
 *.db

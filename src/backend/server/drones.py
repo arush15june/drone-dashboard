@@ -21,6 +21,8 @@ def serialize_drone_state(drone_state, *args, **kwargs):
     """
     Serialize a models.DroneState instance to a schema.DroneStateSchema. 
         
+    :param drone_state models.DroneState: drone state to serialize.
+        
     :return schema.DroneStateSchema: Drone state schema.
     """
     return DroneStateSchema().dump(drone_state, **kwargs)
@@ -56,7 +58,7 @@ def add_drone(data_dict, *args, **kwargs):
     """
     Add a drone to the database.
     
-    :return dict{drone_state}: created drone state.
+    :return schema.DroneState: created drone state.
     """
     drone_state = load_drone_state_dict(data_dict, session=db_session)
     
@@ -66,7 +68,14 @@ def add_drone(data_dict, *args, **kwargs):
     return drone_state.data
 
 def update_drone(uuid, data_dict, *args, **kwargs):
-    """ Update drone by UUID in database. """ 
+    """
+    Update drone by UUID in database. 
+    
+    :param uuid str: 
+    :param data_dict dict{drone_state}:
+
+    :return models.DroneState: drone state instance
+    """ 
     curr_speed = data_dict.pop('curr_speed', None)
     
     drone_instance = DroneState.query.get(uuid)
@@ -86,7 +95,13 @@ def update_drone(uuid, data_dict, *args, **kwargs):
     return drone_state.data
 
 def delete_drone(uuid, *args, **kwargs):
-    """ Delete UUID from drone database. """
+    """
+    Delete UUID from drone database. 
+    
+    :param uuid str: account uuid.
+
+    :return models.DroneState: delete drone state.
+    """
     drone_instance = DroneState.query.get(uuid)
     if drone_instance is None:
         raise ValidationError(message={'error': 'uuid not in database'})

@@ -8,6 +8,7 @@ class DroneStateSchema(ModelSchema):
     uuid = fields.String(dump_only=True)
     is_moving = fields.Boolean(dump_only=True)
     curr_speed = fields.Float(dump_only=True)
+    move_timestamp = fields.DateTime(dump_only=True)
     
     class Meta:
         model = DroneState

@@ -12,7 +12,11 @@ import drone_pb2
 NEW_LINE = '\n'
 
 def get_timestamp():
-    """ Get UTC Timestamp. """
+    """ 
+    Get UTC Timestamp. 
+
+    :return int: utc timestamp.
+    """
 
     return calendar.timegm(datetime.datetime.utcnow().utctimetuple())
 
@@ -76,6 +80,10 @@ def get_random_lat_long():
     return (random.uniform(-90.0, 90.0), random.uniform(-90.0, 90.0))
 
 if __name__ == "__main__":
+    if len(sys.argv) != 4:
+        print("Usage: ./drone.py HOST UUID [random | static]")
+        sys.exit(1)
+
     def get_random_payload():
         """ Randomly generated device state. """
         speed = random.uniform(10.0, 15.0)
@@ -86,10 +94,10 @@ if __name__ == "__main__":
     def get_static_payload():
         return 1.0, 2.0, 10.0
 
-    HOST = '127.0.0.1'
+    HOST = sys.argv[1] 
     PORT = 18000
-    UUID = sys.argv[1]
-    MODE = sys.argv[2]
+    UUID = sys.argv[2]
+    MODE = sys.argv[3]
 
     payload_method = {
         'random': get_random_payload,
