@@ -5,6 +5,7 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
 import Table from 'react-bootstrap/Table'
+import Spinner from 'react-bootstrap/Spinner'
 
 const HOST = ''
 const PORT = '' 
@@ -73,17 +74,26 @@ class Drones extends React.Component {
     super(props)
     this.state = {
       drone_list: [],
-      update: 2*1000 // Update Frequency. 2 seconds.
+      update: 2*1000, // Update Frequency. 2 seconds.
+      spinner: false
     }
     this.droneListUpdateHandler = this.droneListUpdateHandler.bind(this)
     this.addButtonHandler = this.addButtonHandler.bind(this)
   }
 
+  toggleSpinner() {
+    this.setState({
+      spinner: !this.state.spinner
+    })
+  }
+  
   /* 
     Button handler to add a new drone.
   */
   async addButtonHandler() {
+    this.toggleSpinner()
     let add_req = await add_drone()
+    this.toggleSpinner()
     if (add_req.uuid != null) {
       console.log('Drone Created')
     }
@@ -110,7 +120,14 @@ class Drones extends React.Component {
         <Container>
           <Row>
             <Col>
-              <Button onClick={this.addButtonHandler}>Add Drone</Button>
+              <Button disabled={this.state.spinner} onClick={this.addButtonHandler}>{this.state.spinner ?
+            <Spinner
+              as="span"
+              animation="grow"
+              size="sm"
+              role="status"
+              aria-hidden="true" 
+            />: <React.Fragment></React.Fragment>} Add Drone</Button>
             </Col>
           </Row>
           <Row>
