@@ -29,8 +29,9 @@ but have not moved over 1 meter in the last 10 seconds.
     - Having the drone message worker be seperated from the server allows to work on the REST API
     seperately from the handler itself, thus the worker could be kept running to make sure messages
     are not missed, even if the API Server is down.
+    - Building the background worker in golang would be a better option
+    as it will allow handling concurrent connections more efficiently.
 - Simplistic self documenting code.
-
 
 ### Drone
 - Unique UUID4 (acc to RFC 4122) associcated with every drone.
@@ -39,6 +40,8 @@ but have not moved over 1 meter in the last 10 seconds.
     - to be replaced with an MQTT or AMQP client
 - Communication:
     - transmits messages serializing with protobuf to reduce size of the data transmitted (compared to JSON/XML/plaintext)
+    - Protobuf was selected for its wide support of languages thus allowing
+    to write clients in various languages using just the the proto.
 - Simulation:
     - random data
       - send random latitude, longitudes, speeds every few seconds.
