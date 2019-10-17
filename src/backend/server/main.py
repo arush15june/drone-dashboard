@@ -18,7 +18,7 @@ from flask_cors import CORS
 init_db()
 
 app = Flask(__name__)
-cors = CORS(app, resources={r"/api": {"origins": "*"}})
+cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 
 app.register_blueprint(drone_api, url_prefix='/api')
 

@@ -6,39 +6,12 @@ import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
 import Table from 'react-bootstrap/Table'
 import Spinner from 'react-bootstrap/Spinner'
+import { Link } from 'react-router-dom'
 
-const HOST = ''
-const PORT = '' 
-const URL = HOST+PORT
-
-const DRONES_API = '/api/drones'
-
-/* 
-  Get list of all drones.
-*/
-async function get_drones() {
-  let req = await fetch(URL+DRONES_API)
-  let req_json = await req.json()
-  
-  return req_json
-}
-
-/* 
-  Add a new drone to database.
-*/
-async function add_drone() {
-  let req = await fetch(URL+DRONES_API, {
-    'method': 'POST',
-    'body': JSON.stringify({}),
-    'headers': {
-      'Content-Type': 'application/json'
-    }
-  })
-  
-  let req_json = await req.json()
-  
-  return req_json
-}
+import {
+  GetDrones,
+  AddDrone
+} from './API'
 
 /* 
   Generate a table row from drone_state json.
@@ -55,7 +28,7 @@ function generate_table_row(drone_json) {
   return (
     <React.Fragment>
     <tr>
-      <td>{uuid}</td>
+      <td><Link to={`/drone/${uuid}`}>{uuid}</Link></td>
       <td>{latitude.toFixed(3)}</td>
       <td>{longitude.toFixed(3)}</td>
       <td>{data_timestamp}</td>
@@ -92,7 +65,7 @@ class Drones extends React.Component {
   */
   async addButtonHandler() {
     this.toggleSpinner()
-    let add_req = await add_drone()
+    let add_req = await AddDrone()
     this.toggleSpinner()
     if (add_req.uuid != null) {
       console.log('Drone Created')
@@ -103,7 +76,7 @@ class Drones extends React.Component {
     Update the drone table.
   */
   async droneListUpdateHandler() {
-    let all_drones = await get_drones()
+    let all_drones = await GetDrones()
     all_drones = all_drones.map(generate_table_row);
     
     this.setState({
@@ -120,14 +93,16 @@ class Drones extends React.Component {
         <Container>
           <Row>
             <Col>
+              <div className='m-2'>
               <Button disabled={this.state.spinner} onClick={this.addButtonHandler}>{this.state.spinner ?
-            <Spinner
-              as="span"
-              animation="grow"
-              size="sm"
-              role="status"
-              aria-hidden="true" 
-            />: <React.Fragment></React.Fragment>} Add Drone</Button>
+              <Spinner
+                as="span"
+                animation="grow"
+                size="sm"
+                role="status"
+                aria-hidden="true" 
+              />: <React.Fragment></React.Fragment>} Add Drone</Button>
+              </div>
             </Col>
           </Row>
           <Row>

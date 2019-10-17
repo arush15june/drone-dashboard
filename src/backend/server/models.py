@@ -84,7 +84,7 @@ class DroneState(Base):
         move_tdelta = self._diff_timestamp()
         diff_distance = self._diff_distance(latitude, longitude)
 
-        if move_tdelta >= 10.0:
+        if move_tdelta >= 5.0:
             if diff_distance <= 1.0:
                 self.is_moving = False
             else:
