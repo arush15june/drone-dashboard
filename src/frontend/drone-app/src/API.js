@@ -1,5 +1,5 @@
-const HOST = 'http://localhost'
-const PORT = ':5000'
+const HOST = ''
+const PORT = ''
 const URL = HOST+PORT
 
 const DRONES_API = '/api/drones'

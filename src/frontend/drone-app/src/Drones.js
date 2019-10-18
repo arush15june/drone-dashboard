@@ -28,7 +28,7 @@ function generate_table_row(drone_json) {
   return (
     <React.Fragment>
     <tr>
-      <td><Link to={`/drone/${uuid}`}>{uuid}</Link></td>
+      <td><Link to={`/drones/${uuid}`}>{uuid}</Link></td>
       <td>{latitude.toFixed(3)}</td>
       <td>{longitude.toFixed(3)}</td>
       <td>{data_timestamp}</td>

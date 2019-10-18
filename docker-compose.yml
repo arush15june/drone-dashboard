@@ -4,6 +4,8 @@ services:
     build:
       context: .
     working_dir: /deploy/app/
+    volumes:
+      - ./src/backend/server/drones.db:/deploy/app/src/backend/server/drones.db
     ports:
       - '18000:18000'
     networks:

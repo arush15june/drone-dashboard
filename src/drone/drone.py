@@ -1,11 +1,14 @@
 """ Simulated Drone """
 
 import sys
+import csv
+import os
 import socket
 import random
 import datetime
 import calendar
 import time
+import itertools
 
 import drone_pb2
 
@@ -80,8 +83,8 @@ def get_random_lat_long():
     return (random.uniform(-90.0, 90.0), random.uniform(-90.0, 90.0))
 
 if __name__ == "__main__":
-    if len(sys.argv) != 4:
-        print("Usage: ./drone.py HOST UUID [random | static]")
+    if len(sys.argv) <= 4:
+        print("Usage: ./drone.py HOST UUID [random | static | csv]")
         sys.exit(1)
 
     def get_random_payload():
@@ -94,14 +97,34 @@ if __name__ == "__main__":
     def get_static_payload():
         return 1.0, 2.0, 10.0
 
+    def get_csv_payload(csv_file):
+        if csv_file is None:
+            return None
+
+        csvfile = open(csv_file)
+        location_csv = csv.reader(csvfile, delimiter=',', quotechar='|')
+        location_iterator = itertools.cycle(location_csv)
+        
+        def f():
+            data = next(location_iterator)
+            return float(data[1]), float(data[2]), float(data[3])
+        
+        return f
+
     HOST = sys.argv[1] 
     PORT = 18000
     UUID = sys.argv[2]
     MODE = sys.argv[3]
 
+    try:
+        csv_loc = sys.argv[4]
+    except:
+        csv_loc = None
+
     payload_method = {
         'random': get_random_payload,
-        'static': get_static_payload
+        'static': get_static_payload,
+        'csv': get_csv_payload(csv_loc)
     }
 
     if MODE not in payload_method:
